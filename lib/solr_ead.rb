@@ -13,9 +13,10 @@ module SolrEad
   autoload :Indexer
   autoload :Document
   autoload :Component
-  autoload :Railtie if defined?(Rails)
 
   def self.version
     SolrEad::VERSION
   end
 end
+
+require 'solr_ead/railtie' if defined?(Rails)
