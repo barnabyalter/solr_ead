@@ -58,7 +58,8 @@ module SolrEad::Behaviors
   # These fields are used so that we may reconstruct placement of a single component
   # within the hierarchy of the original ead.
   def additional_component_fields(node, addl_fields = Hash.new)
-    addl_fields["id"]                         = [node.xpath("//eadid").text, node.attr("id")].join
+    id = (node.attr("id").blank?) ? [node.parent.attr("id"), parent_id_list(node).length + 1, SecureRandom.hex].join("_") : node.attr("id")
+    addl_fields["id"]                         = [node.xpath("//eadid").text, id].join
     addl_fields["ead_id"]                     = node.xpath("//eadid").text
     addl_fields["parent_id"]                  = node.parent.attr("id") unless node.parent.attr("id").nil?
     addl_fields["parent_id_s"]                = parent_id_list(node)
